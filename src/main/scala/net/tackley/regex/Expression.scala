@@ -62,11 +62,14 @@ case class OptionalExpression(e: Expression) extends Expression {
   override def isAtomic = true
 }
 
-class RegexBuilder(val s: String) {
-  def this() = this("")
-
-  def literal(literal: String) = new RegexBuilder(s + literal)
-
-  def r = s.r
+case class CompositeExpression(a: Expression, b: Expression) extends Expression {
+  def mkString = a.mkString + b.mkString
+  override def isAtomic = false
 }
+
+class EmptyExpression extends Expression {
+  def mkString = ""
+  override def isAtomic = false
+}
+
 

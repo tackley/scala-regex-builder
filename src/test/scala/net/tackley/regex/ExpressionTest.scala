@@ -55,13 +55,3 @@ class ExpressionTest extends FlatSpec with ShouldMatchers {
 
 }
 
-class BuilderTests extends FlatSpec with ShouldMatchers {
-  "RegexBuilder" should "support simple literals" in {
-    new RegexBuilder().literal("a").s should be ("a")
-
-  }
-
-  it should "support chaining literals" in {
-    (new RegexBuilder() literal "a" literal "bc").s should be ("abc")
-  }
-}
