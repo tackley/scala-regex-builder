@@ -2,9 +2,10 @@ package net.tackley.regex
 
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
+import org.junit.runner.RunWith
 
-
-class ExpressionTreeTests extends FlatSpec with ShouldMatchers {
+@RunWith(classOf[org.scalatest.junit.JUnitRunner])
+class ExpressionTest extends FlatSpec with ShouldMatchers {
   "Regular expression tree" should "support simple literals" in {
     LiteralExpression("a").mkString should be ("a")
     LiteralExpression("abc").mkString should be ("abc")
@@ -46,10 +47,12 @@ class ExpressionTreeTests extends FlatSpec with ShouldMatchers {
   it should "support optional" in {
     OptionalExpression(LiteralExpression("a")).mkString should be ("a?")
   }
-
-  it should "support ranges" in {
-    RangeExpression()
+  
+  it should "correcly group when necessary" in {
+    OptionalExpression(LiteralExpression("ab")).mkString should be ("(?:ab)?")
+    RepeatsMinMaxExpression(LiteralExpression("ab"), 2, 5).mkString should be ("(?:ab){2,5}")
   }
+
 }
 
 class BuilderTests extends FlatSpec with ShouldMatchers {
